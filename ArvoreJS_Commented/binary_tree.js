@@ -6,26 +6,34 @@ class BinaryTree {
 
     //insere o elemento da arvores
     insert(element) {
-        this.root = this.insertNode(this.root, element); //Raiz recebe método recursivo de inserção de nó
+        //Raiz recebe método recursivo de inserção de nó, passando a raiz principal e o elemento a ser inserido
+        this.root = this.insertNode(this.root, element); 
     }
+    //Método recursivo para inserção do elemento na árvore
     insertNode(rootNode, value) { 
-        if (rootNode == null) { //Se o nó raiz for null 
-            return new Node(value); // retorna novo nó com o valor a ser inserido
+        //Se o nó raiz for null significa que pode inserir na raiz porque ñ tem outros elementos 
+        if (rootNode == null) { 
+            // retorna novo nó com o valor a ser inserido
+            return new Node(value); 
         }
-        //Se o valor a ser inserido for maior do que o conteúdo do nó raiz
-            // Nó da direita recebe método recursivo que faz as validações para encontrar um nó nulo.
-            // A cada iteração é verificado se há um nó e se ele é menor ou maior, caso seja nulo ele é inserido.
-        rootNode.right = this.insertNode(rootNode.right, value);
+        /* 
+        Caso o rootNode não seja null, é feito a verificação para saber se o valor digitado é maior ou menor
+        que o conteúdo do nó. Caso atenda uma das duas verificações o método recursivo é chamado, 
+        no caso da direita se o valor for maior que o nó e na esquerda se o nó for menor que o valor digitado.
+        */
         if (value > rootNode.content) { 
-
-        } else {
+            rootNode.right = this.insertNode(rootNode.right, value);
+        } 
+        else {
             rootNode.left = this.insertNode(rootNode.left, value);
         }
+        //Ao fim de cada inserção é retornado qual elemento foi inserido, para ser encorporado ao esqueleto da árvore
         return rootNode;
     }
 
     //retorna true se o valor já existe na arvore
     search(value) {
+        //Chamada ao método recursivo que buscará o valor na árvore
         return this.searchNode(this.root, value);
     }
     searchNode(rootNode, value) {
@@ -121,30 +129,44 @@ heigthNode(node){
 
 // informa quantos nós existem na arvore
 size(){
+    //Chamada ao método recursivo sumNodes(), que percorrerá a árvore e mostrará a sua soma de quantos nós existem
     return this.sumNodes(this.root);
 }
-
+//Método recursivo para retornar a quantidade de nós
 sumNodes(node){
+    //Caso a raiz passada seja nula, significa dizer que ñ tem sub-árvores, portanto não há nós, sendo retornado 0
     if(node == null) return 0;
+
     return 1 + this.sumNodes(node.left) + this.sumNodes(node.right);
 }
 
 //exibe o menor valor da arvore
 min() {
+    /*
+        Assim como o método max(), receberá a raiz e verificará se é nula. Caso ñ seja significa que ela tem valor mínimo,
+        valor este que estará na extrema esquerda, portanto a busca é feita pelo looping até encontrar o valor a extrema esquerda,
+        que consequentemente será o menor/mínimo.
+    */
     let node = this.root;
     if(node == null) return null
-    while(node.left!=null)
-    node = node.left;
+    while(node.left!=null){
+        node = node.left;
+    }
     return node.content;
 
  }
 
 //exibe o maior valor da arvore
 max() { 
+    /*
+        Receberá a raiz e caso seja nula não terá valor máximo.
+        Se for diferente de null, procurará o elemento a extrema direita, que será consequentemente o maior/máximo valor.
+     */
     let node = this.root;
     if(node == null) return null
-    while(node.right!=null)
-    node = node.right;
+    while(node.right!=null){
+        node = node.right;
+    }
     return node.content;
 }
 }

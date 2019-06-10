@@ -101,7 +101,8 @@ class BinaryTree {
     removeNode(rootNode, value) {
         //Se o nó estiver nulo não há elemento para ser removido, retornando nulo para mostrar vazia
         if (rootNode == null) return null;
-        //É necessário comparar se o valor digitado é igual ao que está no nó atual, se sim vai para as validações
+        /*É necessário comparar se o valor digitado é igual ao que está no nó atual
+            se sim vai para as validações*/
         if (value == rootNode.content) {
             //Quando a sub arvore não tem filhos(null) Grau 0
             if (rootNode.left === rootNode.right) { 

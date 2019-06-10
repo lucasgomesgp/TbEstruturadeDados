@@ -36,9 +36,17 @@ class BinaryTree {
         //Chamada ao método recursivo que buscará o valor na árvore
         return this.searchNode(this.root, value);
     }
+    //método para percorer a árvore
     searchNode(rootNode, value) {
+        //Se o rootNode, ou seja a raiz passada for nula significa que ela está vazia
         if (rootNode == null) return false;
+        //Se o valor do rootNode atual, for igual ao valor passado, significa que este valor está na árvore
         if (rootNode.content == value) return true;
+        /*Caso percorra as outras validações e não ache vem para as duas finais que:
+          ,no if ele verifica se o valor que está no rootNode, ou seja o elemento atual da árvore
+          se ele é menor do que o valor passado, se sim, ele busca na direita por que provavelmente
+          como é maior ele deve estar mais a direita. Já no else ele entrará se ñ cair em nenhum dos outros if's
+          , consequentemente significa que o valor deve estar mais a esquerda.  */
         if (value > rootNode.content)
             return this.searchNode(rootNode.right, value);
         else
@@ -50,8 +58,11 @@ class BinaryTree {
     inOrderTraverse(callback) {
         this.inOrder(this.root, callback);
     }
+    //Método que fará a exibição da árvore em ordem seguindo a sequência: ESQUERDA,RAIZ,DIREITA.
     inOrder(rootNode, callback) {
+        //Caso o rootNode/raiz seja vazia, significa que ñ existe árvore, retornando apenas para encerrar o método
         if (rootNode == null) return;
+        //Chamará o método passando o nó da esquerda que será apresentado primeiro, depois a raiz e a direita.
         this.inOrder(rootNode.left, callback);
         callback(rootNode.content);
         this.inOrder(rootNode.right, callback);
@@ -60,9 +71,10 @@ class BinaryTree {
     //executa a função callback para cada nó, em pré-ordem
     preOrderTraverse(callback) {
         this.inpreOrder(this.root, callback)
-
     }
+    //Método que fará a exibição da árvore em order seguindo a sequência: RAIZ,ESQUERDA,DIREITA
     inpreOrder(rootNode, callback) {
+        //Caso o rootNode/raiz seja vazia, significa que ñ existe árvore, retornando apenas para encerrar o método
         if (rootNode == null) return;
         callback(rootNode.content);
         this.inpreOrder(rootNode.left, callback);
@@ -79,8 +91,6 @@ class BinaryTree {
         this.inpostOrder(rootNode.right, callback);
         callback(rootNode.content);
     }
-
-
     //remove um elemento existente na arvore e retorna a arvore atualizada
     remove(value) {
         this.heigth.removeNode(thisroot, value);

@@ -58,9 +58,6 @@ function showTheFuckingNodeOnConsole(theFuckingNode){
     console.log(theFuckingNode);
 }
 
-
- 
-
 function mostrarEmOrdem(){
     $('#saida').empty();
     tree.inOrderTraverse(incluir);

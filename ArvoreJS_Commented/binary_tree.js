@@ -72,7 +72,7 @@ class BinaryTree {
     preOrderTraverse(callback) {
         this.inpreOrder(this.root, callback)
     }
-    //Método que fará a exibição da árvore em order seguindo a sequência: RAIZ,ESQUERDA,DIREITA
+    //Método que fará a exibição da árvore em pre Ordem seguindo a sequência: RAIZ,ESQUERDA,DIREITA
     inpreOrder(rootNode, callback) {
         //Caso o rootNode/raiz seja vazia, significa que ñ existe árvore, retornando apenas para encerrar o método
         if (rootNode == null) return;
@@ -85,8 +85,11 @@ class BinaryTree {
     postOrderTraverse(callback) {
         this.inpostOrder(this.root, callback);
     }
+        //Método que fará a exibição da árvore em pós ordem seguindo a sequência: ESQUERDA,DIREIRA,RAIZ
     inpostOrder(rootNode, callback) {
+        //Caso o rootNode/raiz seja vazia, significa que ñ existe árvore, retornando apenas para encerrar o método
         if (rootNode == null) return;
+    //Chamará o método passando o nó da esquerda que será apresentado primeiro, depois a direita e a raiz.
         this.inpostOrder(rootNode.left, callback);
         this.inpostOrder(rootNode.right, callback);
         callback(rootNode.content);
@@ -96,23 +99,28 @@ class BinaryTree {
         this.heigth.removeNode(thisroot, value);
     }
     removeNode(rootNode, value) {
+        //Se o nó estiver nulo não há elemento para ser removido, retornando nulo para mostrar vazia
         if (rootNode == null) return null;
+        //É necessário comparar se o valor digitado é igual ao que está no nó atual, se sim vai para as validações
         if (value == rootNode.content) {
-            if (rootNode.left === rootNode.right) { //Quando a sub arvore ão tem filhos(null) Grau 0
+            //Quando a sub arvore não tem filhos(null) Grau 0
+            if (rootNode.left === rootNode.right) { 
                  return null;
-            } else if (rootNode.right == null) { //Só tem filhos na esquerda Grau 1
+            //Só tem filhos na esquerda Grau 1
+            } else if (rootNode.right == null) { 
                  rootNode = rootNode.left;
-            } else if (rootNode.left == null) { //Só tem filhos na direita Grau 1
+            //Só tem filhos na direita Grau 1
+            } else if (rootNode.left == null) { 
                  rootNode = rootNode.right;
-            } else { //Tem filhos nos dois lados Grau 2
-               let i = rootNode.right;
-               while(i.left!=null){
+            //Tem filhos nos dois lados Grau 2
+            } else {  
+                let i = rootNode.right;
+                while(i.left!=null){
                    i - i.left;
-               }
+                }
                i.left = rootNode.left;
                rootNode = rootNode.right;
             }
-
         } else if (value > rootNode.content) {
             rootNode.right = this.removeNode(rootNode.right, value);
         } else {
@@ -120,19 +128,20 @@ class BinaryTree {
         }
         return rootNode;
     }
-
-
 //exibe a altura da arvore
 heigth(){
     return this.heigthNode(this.root);
 }
 heigthNode(node){
+/*Caso nó seja nulo significa que ñ existe altura da árvore, consequentemente retornando -1, para simbolizar
+ que ela está vazia.*/
     if(node == null) return -1;
+
     let leftHeigth = this.heigthNode(node.left),
         rightHeigth = this.heigthNode(node.right);
     if(leftHeigth > rightHeigth){
         return 1 + leftHeigth;
-    }else{
+ }else{
         return 1 + rightHeigth;
     }
 }
@@ -146,7 +155,6 @@ size(){
 sumNodes(node){
     //Caso a raiz passada seja nula, significa dizer que ñ tem sub-árvores, portanto não há nós, sendo retornado 0
     if(node == null) return 0;
-
     return 1 + this.sumNodes(node.left) + this.sumNodes(node.right);
 }
 

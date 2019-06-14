@@ -52,8 +52,6 @@ class BinaryTree {
         else
             return this.searchNode(rootNode.left, value);
     }
-
-
     //executa a função callback para cada nó, em ordem
     inOrderTraverse(callback) {
         this.inOrder(this.root, callback);
@@ -105,28 +103,43 @@ class BinaryTree {
             se sim vai para as validações*/
         if (value == rootNode.content) {
             //Quando a sub arvore não tem filhos(null) Grau 0
-            if (rootNode.left === rootNode.right) { 
+            if (rootNode.left === rootNode.right) {
+                //Se os valores da direta e esquerda são iguais significa que eles são nulos e estão vazios
                  return null;
+
+        /*Se a sub-árvore da direita ñ tem filhos significa que ele deve buscar à esquerda
+        , o mesmo acontecendo com o else if que compara a esquerda*/
             //Só tem filhos na esquerda Grau 1
             } else if (rootNode.right == null) { 
                  rootNode = rootNode.left;
+
             //Só tem filhos na direita Grau 1
             } else if (rootNode.left == null) { 
                  rootNode = rootNode.right;
+
             //Tem filhos nos dois lados Grau 2
             } else {  
+                //Como ele tem dois filhos, colocará os mesmos na posição depois de excluír o rootNode
                 let i = rootNode.right;
+                /*Sendo assim é necessário percorrer até encontrar a extrema esquerda, 
+                para ligar o lugar do elemento que foi excluído, sendo agora esquerda do que assumirá a posição de raiz */
                 while(i.left!=null){
-                   i - i.left;
+                   i = i.left;
                 }
+                /*Depois de achar uma posição nula, colocará o nó menor a esquerda e 
+                o nó a direita asumirá o valor da raiz excluída, 
+                já que ele é maior e o que estava a esquerda da raiz passa a ser esquerda dele*/
                i.left = rootNode.left;
                rootNode = rootNode.right;
             }
+        //Caso o valor digitado seja maior que a nó/raiz atual, buscará mais a direita, para achar o elemento correspondente 
         } else if (value > rootNode.content) {
             rootNode.right = this.removeNode(rootNode.right, value);
         } else {
+        //Caso seja menor, buscará a esquerda porque a direita ficam os maiores e a esquerda os menores, estando assim mais a esquerda
             rootNode.left = this.removeNode(rootNode.left, value);
         }
+        //Depois de todas as validações para saber se o valor foi excluído é retornado para o método que chamou, o valor que foi removido da tree
         return rootNode;
     }
 //exibe a altura da arvore
@@ -137,9 +150,11 @@ heigthNode(node){
 /*Caso nó seja nulo significa que ñ existe altura da árvore, consequentemente retornando -1, para simbolizar
  que ela está vazia.*/
     if(node == null) return -1;
-
+    //Na altura é necessário chegar até o último elemento, no caso o mais distante da direita ou esquerda, para acha-lá
     let leftHeigth = this.heigthNode(node.left),
         rightHeigth = this.heigthNode(node.right);
+    /*Até encontrar um nó -1, chamará o método correspondente(left ou right) e contará + 1 na altura,
+     quando encontrar -1, voltará até a primeira chamada, retornando os seus valores +1 ou -1 para fazer a soma e retornar a altura*/
     if(leftHeigth > rightHeigth){
         return 1 + leftHeigth;
  }else{
@@ -156,6 +171,7 @@ size(){
 sumNodes(node){
     //Caso a raiz passada seja nula, significa dizer que ñ tem sub-árvores, portanto não há nós, sendo retornado 0
     if(node == null) return 0;
+    //Contará um para cada nó existente na árvore, tanto para esquerda quanto para direita e no final mostrará a soma, a cada loop retorna + 1
     return 1 + this.sumNodes(node.left) + this.sumNodes(node.right);
 }
 

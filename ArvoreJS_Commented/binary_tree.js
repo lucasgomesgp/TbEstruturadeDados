@@ -94,7 +94,7 @@ class BinaryTree {
     }
     //remove um elemento existente na arvore e retorna a arvore atualizada
     remove(value) {
-        this.heigth.removeNode(thisroot, value);
+        this.root = this.removeNode(thisroot, value);
     }
     removeNode(rootNode, value) {
         //Se o nó estiver nulo não há elemento para ser removido, retornando nulo para mostrar vazia
